@@ -1,0 +1,17 @@
+name: data-finder
+version: "1.0.1"
+autor: pewpew79 <grigoriev.d3@mail.ru>
+about: Rust data finder
+args:
+    - config:
+        short: c
+        long: config
+        help: App config path
+        takes_value: true
+        default_value: "./sample_config.yml"
+
+    - type:
+        short: t
+        long: type
+        help: App type for getting from config
+        takes_value: true
