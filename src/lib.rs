@@ -35,7 +35,7 @@ fn get_result(sorted_ids: Vec<String>, assets_mapping: GroupedRecordsType) -> Ap
 /// Run module as function
 pub fn run(config: serde_json::Value, app_type: &str) -> serde_yaml::Value {
     // Load config objects from paths
-    let patterns: HashMap<String, String> = serde_json::from_value(config["_custom_patterns"].clone()).unwrap();
+    let patterns: HashMap<String, String> = serde_json::from_value(config["custom_patterns"].clone()).unwrap();
 
     // Get an important config fields
     let app_config = &config[app_type];
