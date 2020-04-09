@@ -52,16 +52,18 @@ pub fn run(config: serde_json::Value, app_type: &str) -> serde_yaml::Value {
 
 
 
-// /// Run module as CLI
-// pub fn run_cli() {
-//     let cli_config = load_yaml!("../cli.yml");
-//     let parser = App::from_yaml(cli_config).get_matches();
-//
-//     let config_path = &parser.args["config"].vals[0].to_str().unwrap();
-//     let app_type = parser.args["type"].vals[0].to_str().unwrap();
-//
-//     let results = run(config_path, app_type);
-//     fs::write("results.yml", serde_yaml::to_string(&results).unwrap());
-//
-//     println!("{:?}", results);
-// }
+/// Run module as CLI
+pub fn run_cli() {
+    // let cli_config = load_yaml!("../cli.yml");
+    // let parser = App::from_yaml(cli_config).get_matches();
+    //
+    // let config_path = &parser.args["config"].vals[0].to_str().unwrap();
+    // let app_type = parser.args["type"].vals[0].to_str().unwrap();
+    //
+    // let results = run(config_path, app_type);
+    // fs::write("results.yml", serde_yaml::to_string(&results).unwrap());
+    //
+    // println!("{:?}", results);
+
+    println!("START FINDER !");
+}
