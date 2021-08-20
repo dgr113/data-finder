@@ -1,16 +1,16 @@
 [package]
 name = "data-finder"
-version = "1.0.1"
+version = "1.0.3"
 authors = ["pewpew79 <grigoriev.d3@mail.ru>"]
 edition = "2018"
 
 
 [dependencies]
-serde = { version = "1.0", features = ["derive"] }
-clap = { version = "2.33.0", features = ["yaml"] }
-serde_yaml = "0.8.11"
-serde_json = "1.0.41"
-grok = "1.0.0"
-itertools = "0.8.0"
-rayon = "1.2.0"
-glob = "0.3.0"
+grok = "^1.2"
+glob = "^0.3"
+rayon = "^1.5"
+itertools = "^0.8"
+serde_yaml = "^0.8"
+serde_json = "^1.0"
+serde = { version = "^1.0", features = ["derive"] }
+clap = { version = "^2.33", features = ["yaml"] }
