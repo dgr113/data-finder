@@ -1,3 +1,6 @@
+use std::hash::Hash;
+use std::borrow::Borrow;
+
 use serde::{ Deserialize, Serialize };
 
 mod core;
@@ -31,8 +34,11 @@ pub fn get_result(sorted_ids: Vec<String>, assets_mapping: GroupedRecordsType) -
 
 
 /** Run module as function */
-pub fn run(config: FinderConfig, app_type: &str) -> Result<serde_yaml::Value, ApiError> {
-    let app_config = &config.list.get( app_type ).ok_or( ApiError::IndexError ) ?;
+pub fn run<S>(config: FinderConfig, app_type: S)
+    -> Result<serde_yaml::Value, ApiError>
+        where S: Into<String> + Hash + Eq, String: Borrow<S>
+{
+    let app_config = &config.list.get( &app_type ).ok_or( ApiError::IndexError ) ?;
 
     let glob_patt = app_config.glob.as_str();
     let parsed_patt = app_config.parsed_patt.as_str();
