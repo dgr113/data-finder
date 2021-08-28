@@ -5,7 +5,7 @@ pub mod config;
 pub mod errors;
 
 use crate::errors::ApiError;
-use crate::config::DataFinderConfig;
+use crate::config::FinderConfig;
 use crate::core::data_utils::DataGroupLayer;
 use crate::core::user_types::GroupedRecordsType;
 pub use crate::core::io_utils;
@@ -31,7 +31,7 @@ pub fn get_result(sorted_ids: Vec<String>, assets_mapping: GroupedRecordsType) -
 
 
 /** Run module as function */
-pub fn run(config: DataFinderConfig, app_type: &str) -> Result<serde_yaml::Value, ApiError> {
+pub fn run(config: FinderConfig, app_type: &str) -> Result<serde_yaml::Value, ApiError> {
     let app_config = &config.list.get( app_type ).ok_or( ApiError::IndexError ) ?;
 
     let glob_patt = app_config.glob.as_str();
@@ -40,7 +40,7 @@ pub fn run(config: DataFinderConfig, app_type: &str) -> Result<serde_yaml::Value
     let included_fields = &app_config.included_fields;
 
     let files = paths_utils::get_files( glob_patt ) ?;
-    let records = paths_utils::parse_grok(included_fields, &parsed_patt, files, &config.custom_patterns.clone()) ?;
+    let records = paths_utils::parse_grok(included_fields, &parsed_patt, files, &config.custom_patterns, &config.file_path_field_name) ?;
 
     Ok( DataGroupLayer::create_nested_map(&records, group_fields) )
 }

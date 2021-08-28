@@ -38,18 +38,20 @@ fn filter_grok<'a>( included_keys: &'a [String] )
 /** Parse documents with GROK patterns
 * `patterns`: GROK patterns mapping
 */
-pub fn parse_grok(keys: &[String], grok_patt: &str, files: Vec<String>, patterns: &HashMap<String, String>) -> Result<Vec<HashMap<String, String>>, ApiError> {
+pub fn parse_grok(keys: &[String], grok_patt: &str, files: Vec<String>, patterns: &HashMap<String, String>, file_path_field_name: &str)
+    -> Result<Vec<HashMap<String, String>>, ApiError>
+{
     let mut grok = get_grok( patterns );
     let pattern = grok.compile(&grok_patt, false) ?;
     let mut results = Vec::new();
 
     let filter_func = filter_grok( keys );
 
-    for filename in files {
-        match pattern.match_against( &filename ) {
+    for file_path in files {
+        match pattern.match_against( &file_path) {
             Some( m ) => {
                 let mut found_rec: HashMap<String, String> = m.iter().filter_map( &filter_func ).collect();
-                found_rec.insert("MESSAGE".to_string(), filename.to_string());  // Insert full original string into GROK results
+                found_rec.insert(file_path_field_name.to_string(), file_path.to_string());  // Insert full original string into GROK results
                 results.push( found_rec );
             },
             None => println!("No matches found!")

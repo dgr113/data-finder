@@ -6,7 +6,7 @@ use serde::{ Serialize, Deserialize };
 
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
-pub struct DataFinderListElem {
+pub struct FinderListElem {
     pub glob: String,
     pub parsed_patt: String,
     pub included_fields: Vec<String>,
@@ -16,7 +16,8 @@ pub struct DataFinderListElem {
 
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
-pub struct DataFinderConfig {
+pub struct FinderConfig {
+    pub file_path_field_name: String,  // Name of field that containing contents of the file
     pub custom_patterns: HashMap<String, String>,
-    pub list: HashMap<String, DataFinderListElem>
+    pub list: HashMap<String, FinderListElem>
 }
