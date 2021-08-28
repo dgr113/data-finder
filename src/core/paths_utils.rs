@@ -38,11 +38,12 @@ fn filter_grok<'a>( included_keys: &'a [String] )
 /** Parse documents with GROK patterns
 * `patterns`: GROK patterns mapping
 */
-pub fn parse_grok(keys: &[String], grok_patt: &str, files: Vec<String>, patterns: &HashMap<String, String>, file_path_field_name: &str)
+pub fn parse_grok<S>(keys: &[String], grok_patt: S, files: Vec<String>, patterns: &HashMap<String, String>, file_path_field_name: &str)
     -> Result<Vec<HashMap<String, String>>, ApiError>
+        where S: Into<String> + ToString
 {
     let mut grok = get_grok( patterns );
-    let pattern = grok.compile(&grok_patt, false) ?;
+    let pattern = grok.compile(&grok_patt.to_string(), false) ?;
     let mut results = Vec::new();
 
     let filter_func = filter_grok( keys );
@@ -68,8 +69,10 @@ pub fn get_group_keys(group_keys: &[String], rec: &SingleRecType) -> Vec<String>
 
 
 /** Get files by glob pattern */
-pub fn get_files( glob_patt: &str ) -> Result<Vec<String>, ApiError> {
-    let patt = glob::glob( glob_patt ) ?;
+pub fn get_files<S>( glob_patt: S ) -> Result<Vec<String>, ApiError>
+    where S: Into<String> + ToString
+{
+    let patt = glob::glob( &glob_patt.to_string() ) ?;
     let res = patt.filter_map( Result::ok )
         .map( |path| path.to_str().unwrap().to_string() )
         .collect();
